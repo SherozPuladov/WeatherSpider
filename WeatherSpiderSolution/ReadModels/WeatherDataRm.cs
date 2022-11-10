@@ -6,7 +6,22 @@ namespace WeatherSpiderSolution.ReadModels
 
     public record DataSet(string seriesname, List<Data> data);
 
-    public record Chart(
+    public record Category(List<Label> category);
+
+    public record LineChart(
+            string caption,
+            string subcaption,
+            string yaxisname,
+            string xaxisname,
+            string forceaxislimits,
+            string pixelsperpoint,
+            string pixelsperlabel,
+            string compactdatamode,
+            string dataseparator,
+            string theme
+            );
+
+    public record RadarChart(
             string caption,
             string subCaption,
             string numberPrefix,
@@ -14,11 +29,10 @@ namespace WeatherSpiderSolution.ReadModels
             string radarfillcolor
             );
 
-    public record Category(List<Label> category);
 
     public record WeatherDataRm(
-            Chart chart,
+            RadarChart chart,
             List<Category> categories,
             List<DataSet> dataset
             );
-}        
+}

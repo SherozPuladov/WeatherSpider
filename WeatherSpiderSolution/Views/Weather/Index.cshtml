@@ -11,15 +11,25 @@
     <div class="d-flex flex-column">
         <h1 class="text-center">How warm is it there?</h1>
         <hr />
-        <form class="row">
+        <form method="get" action="Weather" class="row">
             <div class="col">
-                <input type="text" class="form-control" placeholder="Write down a city name" value="New York" />
+                <label for="station">Station:</label><br>
+                <input type="text" id="station" name="station" class="form-control" placeholder="Write down a station" value="72502"><br>
             </div>
             <div class="col">
-                <button type="submit" class="btn-primary btn w-100">How warm is it there?</button>
+                <label for="begindate">Begin:</label><br>
+                <input type="date" id="begindate" name="begindate" class="form-control" value="2021-01-01"><br>
             </div>
+            <div class="col">
+                <label for="enddate">End:</label><br>
+                <input type="date" id="enddate" name="enddate" class="form-control" value="2021-12-31"><br>
+            </div>
+            <div class="row mx-auto">
+                <button type="submit" class="btn-primary btn">How warm is it there?</button>
+            </div>
+            
         </form>
-        <div class="mt-5" id="chart-container">FusionCharts XT will load here!</div>
+        <div class="mt-5 mx-auto" id="chart-container">FusionCharts XT will load here!</div>
     </div>
 </div>
 
@@ -38,7 +48,22 @@
                 dataFormat: 'json',
                 dataSource: jsonResp
             }).render();
-
         })
+
+        window.addEventListener('load',
+            function(e) {
+                var date = new Date();
+                
+                var day = date.getDate();
+                if (day < 10) day = '0' + day;
+
+                var month = date.getMonth() + 1;
+                if (month < 10) month = '0' + month;
+
+                var year = date.getFullYear();
+
+                document.getElementById("date").value = year + "-" + month + "-" + day;
+            }, false);
+        
     </script>
 }
