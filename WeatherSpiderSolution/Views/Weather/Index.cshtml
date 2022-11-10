@@ -11,18 +11,18 @@
     <div class="d-flex flex-column">
         <h1 class="text-center">How warm is it there?</h1>
         <hr />
-        <form method="get" action="Weather" class="row">
+        <form method="get" class="row">
             <div class="col">
                 <label for="station">Station:</label><br>
                 <input type="text" id="station" name="station" class="form-control" placeholder="Write down a station" value="72502"><br>
             </div>
             <div class="col">
-                <label for="begindate">Begin:</label><br>
-                <input type="date" id="begindate" name="begindate" class="form-control" value="2021-01-01"><br>
+                <label for="start">Begin:</label><br>
+                <input type="date" id="start" name="start" class="form-control" value="2021-01-01"><br>
             </div>
             <div class="col">
-                <label for="enddate">End:</label><br>
-                <input type="date" id="enddate" name="enddate" class="form-control" value="2021-12-31"><br>
+                <label for="end">End:</label><br>
+                <input type="date" id="end" name="end" class="form-control" value="2021-12-31"><br>
             </div>
             <div class="row mx-auto">
                 <button type="submit" class="btn-primary btn">How warm is it there?</button>
@@ -49,21 +49,5 @@
                 dataSource: jsonResp
             }).render();
         })
-
-        window.addEventListener('load',
-            function(e) {
-                var date = new Date();
-                
-                var day = date.getDate();
-                if (day < 10) day = '0' + day;
-
-                var month = date.getMonth() + 1;
-                if (month < 10) month = '0' + month;
-
-                var year = date.getFullYear();
-
-                document.getElementById("date").value = year + "-" + month + "-" + day;
-            }, false);
-        
     </script>
 }

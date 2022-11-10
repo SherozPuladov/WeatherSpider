@@ -21,26 +21,22 @@ public class WeatherController : Controller
 
     public IActionResult Index()
     {
-
         return View();
     }
 
     [HttpGet]
-    public IActionResult Weather(string station="72502", string begindate="2021-01-01", string enddate="2021-12-31")
+    public IActionResult Weather(string station, string start, string end)
     {
+        Console.WriteLine($"Start to get weather: {station} From {start} To {end}");
+        if (station == null) return NotFound();
+
         JToken dataToken = GetData();
 
         IEnumerable<JToken> children = dataToken.Children();
-        foreach(var ch in children)
-            Console.WriteLine(ch);
 
         var tavg = GetChilds("tavg");
         var tmin = GetChilds("tmin");
         var tmax = GetChilds("tmax");
-        var prcp = GetChilds("prcp");
-        var snow = GetChilds("snow");
-        var wdir = GetChilds("wdir");
-        var wspd = GetChilds("wspd");
 
         var date = new List<Label>();
         foreach (var ch in children)
@@ -51,7 +47,9 @@ public class WeatherController : Controller
 
         JToken GetData()
         {
-            var url = $"https://meteostat.p.rapidapi.com/stations/monthly?station={station}&start={begindate}&end={enddate}";
+            var url = $"https://meteostat.p.rapidapi.com/stations/monthly?station={station}&start={start}&end={end}";
+
+            Console.WriteLine("Request URL: " + url);
 
             var request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = "GET";
@@ -77,9 +75,7 @@ public class WeatherController : Controller
             List<Data> child = new List<Data>();
             foreach (var ch in children)
             {
-                Console.WriteLine($"{childName} Child: " + ch[childName]);
-                if (ch != null) 
-                    child.Add(new Data((double)ch[childName]));
+                child.Add(new Data((double)ch[childName]));
             }
             return child;
         }
@@ -88,7 +84,7 @@ public class WeatherController : Controller
         {
             return new WeatherDataRm(
                 chart: new RadarChart(
-                    caption: "Weather in New York",
+                    caption: $"Weather in {station}",
                     subCaption: "Based on data collected last year",
                     numberPrefix: "",
                     theme: "fusion",
@@ -119,9 +115,9 @@ public class WeatherController : Controller
                 );
         }
 
-        
 
-        
+
+
     }
 
     /*
